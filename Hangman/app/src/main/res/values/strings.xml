@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Hangman</string>
+    <string name="multiplayerButton">Multiplayer</string>
+    <string name="singlePlayerButton">Single Player</string>
+    <string name="title">Hangman</string>
+    <string name="title_activity_single_player">singlePlayerActivity</string>
+    <string name="image">Cat Image</string>
+</resources>
