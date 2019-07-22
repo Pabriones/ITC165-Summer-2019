@@ -31,6 +31,19 @@ public class singleplayerActivity extends AppCompatActivity {
     final String WINNING_MESSAGE = "You won!";
     final String LOSING_MESSAGE = "You lost!";
 
+    private void revealLetterInWord(char letter){
+        int indexOfLetter = wordToBeGuessed.indexOf(letter);
+
+        //loop only if index is grater than 0
+        while(indexOfLetter >= 0){
+            wordDisplayedCharArray[indexOfLetter] = wordToBeGuessed.charAt(indexOfLetter);
+            indexOfLetter = wordToBeGuessed.indexOf(letter, indexOfLetter + 1); //find the second occurrence of a word (it won't run through the whole array)
+        }
+
+        //update the string
+        wordDisplayedString = String.valueOf(wordDisplayedCharArray);
+    }
+
     private void displayWordOnScreen(){
         String formattedString = "";
         for(char character : wordDisplayedCharArray){
@@ -129,7 +142,10 @@ public class singleplayerActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                
+                //if there is some letter on the input field
+                if(s.length() != 0){
+                    checkIfLetterIsInWord(s.charAt(0));
+                }
             }
 
             @Override
@@ -138,8 +154,24 @@ public class singleplayerActivity extends AppCompatActivity {
             }
         });
     }
+    public void checkIfLetterIsInWord(char letter){
+        //if the letter was found inside the word to be guessed
+        if(wordToBeGuessed.indexOf(letter) >= 0){
+            //if the letter was not displayed yet
+            if(wordDisplayedString.indexOf(letter) < 0){
+                //replace the underscore with the letter
+                revealLetterInWord(letter);
 
 
+                //update the changes on the screen
+                displayWordOnScreen();
+            }
+            }else{
+               lettersTried += letter + ", ";
+               String messageToBeDisplayed = MESSAGE_WITH_LETTER_TRIED + lettersTried;
+               txtLettersTried.setText(messageToBeDisplayed);
+        }
+    }
 
 
 }
