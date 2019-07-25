@@ -5,4 +5,9 @@
     <string name="title">Hangman</string>
     <string name="title_activity_single_player">singlePlayerActivity</string>
     <string name="image">Cat Image</string>
+
+    <string name="head">The Head</string>
+    <string name="body">The Body</string>
+    <string name="arm">An Arm</string>
+    <string name="leg">A Leg</string>
 </resources>
