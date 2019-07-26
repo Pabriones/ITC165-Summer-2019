@@ -10,4 +10,8 @@
     <string name="body">The Body</string>
     <string name="arm">An Arm</string>
     <string name="leg">A Leg</string>
+    <string name="gallows">The Gallows</string>
+    <string name="reset">RESET</string>
+    <string name="textview">TextView</string>
+    <string name="name">Name</string>
 </resources>
