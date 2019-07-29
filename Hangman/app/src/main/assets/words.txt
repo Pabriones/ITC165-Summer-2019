@@ -126,7 +126,6 @@ Graphics
 Grid
 Hacker
 Hand-held
-Hard disk
 Harddrive
 Highway
 History
