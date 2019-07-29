@@ -1,10 +1,14 @@
 package com.example.hangman;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,12 @@ public class singleplayerActivity extends AppCompatActivity {
     final String MESSAGE_WITH_LETTER_TRIED = "Letters tried: ";
     final String WINNING_MESSAGE = "You won!";
     final String LOSING_MESSAGE = "You lost!";
+    //adds the elements to manipulate the body parts for hangman
+    private int numParts = 6;
+    private ImageView[] bodyParts;
+    private int numChars;
+    private int numCorr;
+    private int currPart;
 
     private void revealLetterInWord(char letter){
         int indexOfLetter = wordToBeGuessed.indexOf(letter);
@@ -53,6 +63,11 @@ public class singleplayerActivity extends AppCompatActivity {
     }
 
     private void initializeGame() {
+
+        //hide the images when starting the game
+        for(int p = 0; p < numParts; p++) {
+            bodyParts[p].setVisibility(View.INVISIBLE);
+        }
         //1. WORD
         //shuffle array list and get first element, and then remove it
         Collections.shuffle(myListOfWords);
@@ -65,6 +80,8 @@ public class singleplayerActivity extends AppCompatActivity {
         //add underscores
         for(int i = 0; i < wordDisplayedCharArray.length; i++){
             wordDisplayedCharArray[i] = '_';
+            //creates a variable to compare to see if you win or lost
+            numChars++;
         }
 
         //initialize a string from this char array (for search purposes)
@@ -72,7 +89,6 @@ public class singleplayerActivity extends AppCompatActivity {
 
         //display words
         displayWordOnScreen();
-
         //2.INPUT
         //clear input field
         edtInput.setText(""); //make sure input text is clear
@@ -97,6 +113,15 @@ public class singleplayerActivity extends AppCompatActivity {
         txtWordToBeGuessed = findViewById(R.id.WordToBeGuessed);
         edtInput = findViewById(R.id.userGuess);
         txtLettersTried = findViewById(R.id.wordsGuessed);
+
+        //initialize the body parts and sets them to something different in array
+        bodyParts = new ImageView[numParts];
+        bodyParts[0] = (ImageView)findViewById(R.id.head);
+        bodyParts[1] = (ImageView)findViewById(R.id.body);
+        bodyParts[2] = (ImageView)findViewById(R.id.arm1);
+        bodyParts[3] = (ImageView)findViewById(R.id.arm2);
+        bodyParts[4] = (ImageView)findViewById(R.id.leg1);
+        bodyParts[5] = (ImageView)findViewById(R.id.leg2);
 
         //populate array list with data from a file
         InputStream myInputStream = null;
@@ -155,12 +180,17 @@ public class singleplayerActivity extends AppCompatActivity {
         });
     }
     public void checkIfLetterIsInWord(char letter){
+        boolean correct = false;
         //if the letter was found inside the word to be guessed
         if(wordToBeGuessed.indexOf(letter) >= 0){
             //if the letter was not displayed yet
             if(wordDisplayedString.indexOf(letter) < 0){
                 //replace the underscore with the letter
                 revealLetterInWord(letter);
+                //after revealing the letter it will set correct =true so that way a new body part doesnt pop up
+                //and adds to the number correct so the game ends after winning or losing
+                numCorr++;
+                correct = true;
 
 
                 //update the changes on the screen
@@ -170,6 +200,58 @@ public class singleplayerActivity extends AppCompatActivity {
                lettersTried += letter + ", ";
                String messageToBeDisplayed = MESSAGE_WITH_LETTER_TRIED + lettersTried;
                txtLettersTried.setText(messageToBeDisplayed);
+        }
+
+        //will display if you win, if not it will skip
+        if (numCorr == numChars) {
+
+            // Display Alert Dialog
+            AlertDialog.Builder winBuild = new AlertDialog.Builder(this);
+            winBuild.setTitle("YAY");
+            winBuild.setMessage("You win!\n\nThe answer was:\n\n"+wordToBeGuessed);
+            winBuild.setPositiveButton("Play Again",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            singleplayerActivity.this.initializeGame();
+                        }});
+
+            winBuild.setNegativeButton("Exit",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            singleplayerActivity.this.finish();
+                        }});
+
+            winBuild.show();
+        }
+        //checks to see if you got one correct
+        if(correct){
+
+        }
+        //this will run until all parts are present
+        else if(currPart < numParts){
+            bodyParts[currPart].setVisibility(View.VISIBLE);
+            currPart++;
+
+        }
+        //will run if you lose and currparts is more then numparts
+        else{
+            // Display Alert Dialog
+            AlertDialog.Builder loseBuild = new AlertDialog.Builder(this);
+            loseBuild.setTitle("OOPS");
+            loseBuild.setMessage("You lose!\n\nThe answer was:\n\n"+wordToBeGuessed);
+            loseBuild.setPositiveButton("Play Again",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            singleplayerActivity.this.initializeGame();
+                        }});
+
+            loseBuild.setNegativeButton("Exit",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            singleplayerActivity.this.finish();
+                        }});
+
+            loseBuild.show();
         }
     }
 
