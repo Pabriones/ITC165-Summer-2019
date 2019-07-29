@@ -63,6 +63,9 @@ public class singleplayerActivity extends AppCompatActivity {
     }
 
     private void initializeGame() {
+        numParts = 6;
+        numCorr = 0;
+        currPart = 0;
 
         //hide the images when starting the game
         for(int p = 0; p < numParts; p++) {
@@ -242,6 +245,8 @@ public class singleplayerActivity extends AppCompatActivity {
             loseBuild.setPositiveButton("Play Again",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            numParts = 6;
+                            numCorr = 0;
                             singleplayerActivity.this.initializeGame();
                         }});
 
