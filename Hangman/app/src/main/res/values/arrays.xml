@@ -1,0 +1,11 @@
+<resources>
+    <string-array name="words">
+        <item>ARTIFICIAL</item>
+        <item>COMPUTER</item>
+        <item>TRILOGY</item>
+        <item>PILL</item>
+        <item>EXPLOSION</item>
+        <item>SENTINEL</item>
+        <item>TORTURE</item>
+    </string-array>
+</resources>

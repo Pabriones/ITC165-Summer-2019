@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
 
     }
-    @Override
+
     public void onClick(View view) {
         if(view.getId() == R.id.singleplayerButton){
             Intent single_player = new Intent(this, singleplayerActivity.class);
