@@ -32,4 +32,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             this.startActivity(multi_player);
         }
     }
+
 }
+
