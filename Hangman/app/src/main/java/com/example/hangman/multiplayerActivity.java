@@ -49,7 +49,11 @@ public class multiplayerActivity extends AppCompatActivity {
         words = getIntent()
                 .getExtras().getString("Value");
 
-      //  wordLayout.addView();
+
+
+
+
+       // wordLayout.addView(words);
 
         //    getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -110,7 +114,11 @@ public class multiplayerActivity extends AppCompatActivity {
     }
 
     public void letterPressed(View view) {
-        String ltr = ((TextView) view).getText().toString();
+        String ltr;
+
+        ltr = getIntent()
+                .getExtras().getString("Value");
+       // String ltr = ((TextView) view).getText().toString();
         char letterChar = ltr.charAt(0);
 
         view.setEnabled(false);
