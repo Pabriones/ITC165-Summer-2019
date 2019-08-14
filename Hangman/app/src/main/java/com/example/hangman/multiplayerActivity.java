@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
 import com.example.hangman.LetterAdapter;
 
@@ -41,10 +42,10 @@ public class multiplayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_multiplayer);
 
 
-        wordLayout = (LinearLayout) findViewById(R.id.word);
+        wordLayout = findViewById(R.id.word);
 
         Intent intent = getIntent();
-        words = intent.getStringExtra(WordInputActivity.VALUE);
+        words = (intent.getStringExtra(WordInputActivity.VALUE)).toUpperCase();
 
 
         //initialize the body parts and sets them to something different in array
@@ -61,6 +62,7 @@ public class multiplayerActivity extends AppCompatActivity {
         letters = findViewById(R.id.letters);
         LetterAdapter ltrAdapt = new LetterAdapter((multiplayerActivity.this));
         letters.setAdapter(ltrAdapt);
+
 
         playGame();
 
@@ -103,16 +105,15 @@ public class multiplayerActivity extends AppCompatActivity {
     }
 
     public void letterPressed(View view) {
-
-        String ltr = "c";
-
-       //get the character from the string
+        //check which letter the player has chosen
+        String ltr = ((TextView)view).getText().toString();
+        //get the character from the string
         char letterChar = ltr.charAt(0);
-        
+
         //disable the letter button and update the background drawable
         view.setEnabled(false);
         view.setBackgroundResource(R.drawable.letter_down);
-        
+
         //loop through the characters of the target word to verify whether
         // the player's guess is in it
         boolean correct = false;
@@ -150,7 +151,7 @@ public class multiplayerActivity extends AppCompatActivity {
 
                 winBuild.show();
             }
-        //some guesses left
+
         } else if (currPart < numParts) {
             //some guesses left
             bodyParts[currPart].setVisibility(View.VISIBLE);
@@ -159,7 +160,7 @@ public class multiplayerActivity extends AppCompatActivity {
             //user has lost
             disableBtns();
 
-          // Display Alert Dialog to notify the player they lost the game
+            // Display Alert Dialog to notify the player they lost the game
             AlertDialog.Builder loseBuild = new AlertDialog.Builder(this);
             loseBuild.setTitle("OOPS");
             loseBuild.setMessage("You lose!\n\nThe answer was:\n\n" + words);

@@ -14,8 +14,10 @@
         <activity android:name=".singleplayerActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".multiplayerActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".WordInputActivity" />
-        <activity android:name=".multiplayerActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
