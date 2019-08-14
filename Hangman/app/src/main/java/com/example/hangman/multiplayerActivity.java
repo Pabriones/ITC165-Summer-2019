@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.example.hangman.LetterAdapter;
 
 import java.util.Random;
 
@@ -26,7 +27,7 @@ public class multiplayerActivity extends AppCompatActivity {
     private int currPart;
 
     //declare variables
-    private String words;
+    private String words= "";;
     private Random rand = new Random();
     private String currWord = "";
     private LinearLayout wordLayout;
@@ -42,8 +43,8 @@ public class multiplayerActivity extends AppCompatActivity {
 
         wordLayout = (LinearLayout) findViewById(R.id.word);
 
-        words = getIntent()
-                .getExtras().getString("Value");
+        Intent intent = getIntent();
+        words = intent.getStringExtra(WordInputActivity.VALUE);
 
 
         //initialize the body parts and sets them to something different in array
@@ -69,7 +70,7 @@ public class multiplayerActivity extends AppCompatActivity {
     private void playGame() {
         numParts = 6;
         numCorr = 0;
-        numChars = currWord.length();
+        numChars = words.length();
         currPart = 0;
 
 
@@ -102,11 +103,9 @@ public class multiplayerActivity extends AppCompatActivity {
     }
 
     public void letterPressed(View view) {
-        String ltr;
 
-        ltr = getIntent()
-                .getExtras().getString("Value");
-        
+        String ltr = "c";
+
        //get the character from the string
         char letterChar = ltr.charAt(0);
         
@@ -125,7 +124,7 @@ public class multiplayerActivity extends AppCompatActivity {
                 charViews[k].setTextSize(16);
             }
         }
-        //correct uess
+        //correct guess
         if (correct) {
             if (numCorr == words.length()) {
                 // Disable Buttons
@@ -191,9 +190,10 @@ public class multiplayerActivity extends AppCompatActivity {
     }
 
     public void resetGame(){
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+        Intent multi_player = new Intent(this, WordInputActivity.class);
+        multiplayerActivity.this.finish();
+        this.startActivity(multi_player);
+
     }
 
 }

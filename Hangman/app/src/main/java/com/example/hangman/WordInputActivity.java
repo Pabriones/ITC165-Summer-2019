@@ -13,6 +13,7 @@ public class WordInputActivity extends AppCompatActivity{
     Button addWordToBeGuessed;
     EditText wordAdded;
     String stringWord;
+    public static final String VALUE = "VALUE";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,9 +25,9 @@ public class WordInputActivity extends AppCompatActivity{
         addWordToBeGuessed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent multiplayer = new Intent(WordInputActivity.this, multiplayerActivity.class);
                 stringWord = wordAdded.getText().toString();
-                multiplayer.putExtra("Value", stringWord);
+                Intent multiplayer = new Intent(WordInputActivity.this, multiplayerActivity.class);
+                multiplayer.putExtra("VALUE", stringWord);
                 startActivity(multiplayer);
                 finish();
             }
