@@ -9,22 +9,23 @@ import android.widget.Button;
 
 public class LetterAdapter extends BaseAdapter {
 
-    private String[] letters;
-    private LayoutInflater letterInf;
+    private String[] letters; //to store the letters of the alphabet
+    private LayoutInflater letterInf; //to apply yhe button layout
 
 
     public LetterAdapter(Context c) {
+        //instantiate the alphabet array and assign the letters A-Z to each position
         letters = new String[26];
         for (int a = 0; a < letters.length; a++) {
             letters[a] = "" + (char)(a+'A');
         }
-
+        //loop starting at zero by adding the value of the character A to each array index
         letterInf = LayoutInflater.from(c);
     }
 
 
     public int getCount() {
-        return letters.length;
+        return letters.length; //represents the number of views, one for each letter
     }
 
 
