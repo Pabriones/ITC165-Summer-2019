@@ -13,4 +13,6 @@
     <string name="reset">RESET</string>
     <string name="textview">TextView</string>
     <string name="name">Name</string>
+    <string name="btn_add_word">SEND</string>
+    <string name="add_word_hint">Enter word here</string>
 </resources>

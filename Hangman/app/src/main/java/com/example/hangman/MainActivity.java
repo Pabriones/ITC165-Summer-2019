@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             this.startActivity(single_player);
         }
         else if(view.getId() == R.id.multiplayerButton){
-            Intent multi_player = new Intent(this, multiplayerActivity.class);
+            Intent multi_player = new Intent(this, WordInputActivity.class);
             this.startActivity(multi_player);
         }
     }

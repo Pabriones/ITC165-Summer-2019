@@ -26,10 +26,10 @@ public class multiplayerActivity extends AppCompatActivity {
     private int currPart;
 
     //declare variables
-    private String[] words;
+    private String words;
     private Random rand = new Random();
     private String currWord = "";
-    private LinearLayout wordLayout;
+    private TextView wordLayout;
     private TextView[] charViews;
 
     private GridView letters;
@@ -39,10 +39,16 @@ public class multiplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
 
-        Resources res = getResources();
-        words = res.getStringArray(R.array.words);
+      //  Resources res = getResources();
+
+
+       // words = res.getStringArray(R.array.words);
 
         wordLayout = findViewById(R.id.word);
+
+        words = getIntent().getExtras().getString("Value");
+
+        wordLayout.setText(words);
 
         //    getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -81,24 +87,25 @@ public class multiplayerActivity extends AppCompatActivity {
 
         }
 
-        String newWord = words[rand.nextInt(words.length)];
 
-        while(newWord.equals(currWord)) newWord = words[rand.nextInt(words.length)];
-        currWord = newWord;
+//        while(newWord.equals(currWord)) newWord = words[rand.nextInt(words.length)];
+//        currWord = words;
+//
+        charViews = new TextView[words.length()];
+        wordLayout.setText(null);
+        //wordLayout.clearComposingText();
 
-        charViews = new TextView[currWord.length()];
-        wordLayout.removeAllViews();
-
-        for (int c = 0; c < currWord.length(); c++) {
+        for (int c = 0; c < words.length(); c++) {
             charViews[c] = new TextView(this);
-            charViews[c].setText("" + currWord.charAt(c));
+            charViews[c].setText("" + words.charAt(c));
 
             charViews[c].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             charViews[c].setGravity(Gravity.CENTER);
             charViews[c].setTextColor(Color.GREEN);
             charViews[c].setBackgroundResource(R.drawable.letter_bg);
+
             //add to layout
-            wordLayout.addView(charViews[c]);
+            wordLayout = charViews[c];
         }
     }
 
@@ -110,8 +117,8 @@ public class multiplayerActivity extends AppCompatActivity {
         view.setBackgroundResource(R.drawable.letter_down);
 
         boolean correct = false;
-        for (int k = 0; k < currWord.length(); k++) {
-            if (currWord.charAt(k) == letterChar) {
+        for (int k = 0; k < words.length(); k++) {
+            if (words.charAt(k) == letterChar) {
                 correct = true;
                 numCorr++;
                 charViews[k].setTextColor(Color.BLACK);
@@ -120,14 +127,14 @@ public class multiplayerActivity extends AppCompatActivity {
         }
 
         if (correct) {
-            if (numCorr == currWord.length()) {
+            if (numCorr == words.length()) {
                 // Disable Buttons
                 disableBtns();
 
                 // Display Alert Dialog
                 AlertDialog.Builder winBuild = new AlertDialog.Builder(this);
                 winBuild.setTitle("YAY");
-                winBuild.setMessage("You win!\n\nThe answer was:\n\n" + currWord);
+                winBuild.setMessage("You win!\n\nThe answer was:\n\n" + words);
                 winBuild.setPositiveButton("Play Again",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -156,7 +163,7 @@ public class multiplayerActivity extends AppCompatActivity {
             // Display Alert Dialog
             AlertDialog.Builder loseBuild = new AlertDialog.Builder(this);
             loseBuild.setTitle("OOPS");
-            loseBuild.setMessage("You lose!\n\nThe answer was:\n\n" + currWord);
+            loseBuild.setMessage("You lose!\n\nThe answer was:\n\n" + words);
             loseBuild.setPositiveButton("Play Again",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
