@@ -48,12 +48,7 @@ public class singleplayerActivity extends AppCompatActivity {
 
         wordLayout = findViewById(R.id.word);
 
-        //    getActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
         //initialize the body parts and sets them to something different in array
-
         bodyParts = new ImageView[numParts];
         bodyParts[0] =  findViewById(R.id.head);
         bodyParts[1] =  findViewById(R.id.body);
@@ -84,35 +79,45 @@ public class singleplayerActivity extends AppCompatActivity {
             bodyParts[p].setVisibility(View.INVISIBLE);
 
         }
-
+        //randomly chooses a word
         String newWord = words[rand.nextInt(words.length)];
-
+        
+        //assign the word chosen to the variable currWord
         while(newWord.equals(currWord)) newWord = words[rand.nextInt(words.length)];
         currWord = newWord;
 
         charViews = new TextView[currWord.length()];
         wordLayout.removeAllViews();
-
+        
+        // iterate over each letter of the answer, create a text view for each letter
+        // and set the text view's text to the current letter
         for (int c = 0; c < currWord.length(); c++) {
             charViews[c] = new TextView(this);
             charViews[c].setText("" + currWord.charAt(c));
-
+            
+            // set the display properties on the text view
             charViews[c].setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
             charViews[c].setGravity(Gravity.CENTER);
             charViews[c].setTextColor(Color.GREEN);
             charViews[c].setBackgroundResource(R.drawable.letter_bg);
+           
             //add to layout
             wordLayout.addView(charViews[c]);
         }
     }
 
     public void letterPressed(View view) {
+        //check which letter the player has chosen
         String ltr = ((TextView) view).getText().toString();
+        //get the character from the string
         char letterChar = ltr.charAt(0);
-
+        
+        //disable the letter button and update the background drawable
         view.setEnabled(false);
         view.setBackgroundResource(R.drawable.letter_down);
-
+        
+        //loop through the characters of the target word to verify whether
+        // the player's guess is in it
         boolean correct = false;
         for (int k = 0; k < currWord.length(); k++) {
             if (currWord.charAt(k) == letterChar) {
@@ -122,13 +127,13 @@ public class singleplayerActivity extends AppCompatActivity {
                 charViews[k].setTextSize(16);
             }
         }
-
+        //correct guess
         if (correct) {
             if (numCorr == currWord.length()) {
                 // Disable Buttons
                 disableBtns();
 
-                // Display Alert Dialog
+                // If this is true, we notify the player that they won the game
                 AlertDialog.Builder winBuild = new AlertDialog.Builder(this);
                 winBuild.setTitle("YAY");
                 winBuild.setMessage("You win!\n\nThe answer was:\n\n" + currWord);
@@ -157,7 +162,7 @@ public class singleplayerActivity extends AppCompatActivity {
             //user has lost
             disableBtns();
 
-            // Display Alert Dialog
+            // Display Alert Dialog to notify the player they lost the game
             AlertDialog.Builder loseBuild = new AlertDialog.Builder(this);
             loseBuild.setTitle("OOPS");
             loseBuild.setMessage("You lose!\n\nThe answer was:\n\n" + currWord);
