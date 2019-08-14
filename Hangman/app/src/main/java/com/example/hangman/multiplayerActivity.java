@@ -29,7 +29,7 @@ public class multiplayerActivity extends AppCompatActivity {
     private String words;
     private Random rand = new Random();
     private String currWord = "";
-    private TextView wordLayout;
+    private LinearLayout wordLayout;
     private TextView[] charViews;
 
     private GridView letters;
@@ -44,11 +44,12 @@ public class multiplayerActivity extends AppCompatActivity {
 
        // words = res.getStringArray(R.array.words);
 
-        wordLayout = findViewById(R.id.word);
+        wordLayout = (LinearLayout) findViewById(R.id.word);
 
-        words = getIntent().getExtras().getString("Value");
+        words = getIntent()
+                .getExtras().getString("Value");
 
-        wordLayout.setText(words);
+      //  wordLayout.addView();
 
         //    getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -92,8 +93,7 @@ public class multiplayerActivity extends AppCompatActivity {
 //        currWord = words;
 //
         charViews = new TextView[words.length()];
-        wordLayout.setText(null);
-        //wordLayout.clearComposingText();
+        wordLayout.removeAllViews();
 
         for (int c = 0; c < words.length(); c++) {
             charViews[c] = new TextView(this);
@@ -105,7 +105,7 @@ public class multiplayerActivity extends AppCompatActivity {
             charViews[c].setBackgroundResource(R.drawable.letter_bg);
 
             //add to layout
-            wordLayout = charViews[c];
+            wordLayout.addView(charViews[c]);
         }
     }
 
