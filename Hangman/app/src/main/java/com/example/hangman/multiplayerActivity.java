@@ -39,24 +39,11 @@ public class multiplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
 
-      //  Resources res = getResources();
-
-
-       // words = res.getStringArray(R.array.words);
 
         wordLayout = (LinearLayout) findViewById(R.id.word);
 
         words = getIntent()
                 .getExtras().getString("Value");
-
-
-
-
-
-       // wordLayout.addView(words);
-
-        //    getActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
         //initialize the body parts and sets them to something different in array
@@ -92,17 +79,18 @@ public class multiplayerActivity extends AppCompatActivity {
 
         }
 
-
-//        while(newWord.equals(currWord)) newWord = words[rand.nextInt(words.length)];
-//        currWord = words;
 //
         charViews = new TextView[words.length()];
         wordLayout.removeAllViews();
+        
+        // iterate over each letter of the answer, create a text view for each letter
+        // and set the text view's text to the current letter
 
         for (int c = 0; c < words.length(); c++) {
             charViews[c] = new TextView(this);
             charViews[c].setText("" + words.charAt(c));
-
+            
+            // set the display properties on the text view
             charViews[c].setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             charViews[c].setGravity(Gravity.CENTER);
             charViews[c].setTextColor(Color.GREEN);
@@ -118,12 +106,16 @@ public class multiplayerActivity extends AppCompatActivity {
 
         ltr = getIntent()
                 .getExtras().getString("Value");
-       // String ltr = ((TextView) view).getText().toString();
+        
+       //get the character from the string
         char letterChar = ltr.charAt(0);
-
+        
+        //disable the letter button and update the background drawable
         view.setEnabled(false);
         view.setBackgroundResource(R.drawable.letter_down);
-
+        
+        //loop through the characters of the target word to verify whether
+        // the player's guess is in it
         boolean correct = false;
         for (int k = 0; k < words.length(); k++) {
             if (words.charAt(k) == letterChar) {
@@ -133,13 +125,13 @@ public class multiplayerActivity extends AppCompatActivity {
                 charViews[k].setTextSize(16);
             }
         }
-
+        //correct uess
         if (correct) {
             if (numCorr == words.length()) {
                 // Disable Buttons
                 disableBtns();
 
-                // Display Alert Dialog
+                // If this is true, we notify the player that they won the game
                 AlertDialog.Builder winBuild = new AlertDialog.Builder(this);
                 winBuild.setTitle("YAY");
                 winBuild.setMessage("You win!\n\nThe answer was:\n\n" + words);
@@ -159,7 +151,7 @@ public class multiplayerActivity extends AppCompatActivity {
 
                 winBuild.show();
             }
-
+        //some guesses left
         } else if (currPart < numParts) {
             //some guesses left
             bodyParts[currPart].setVisibility(View.VISIBLE);
@@ -168,7 +160,7 @@ public class multiplayerActivity extends AppCompatActivity {
             //user has lost
             disableBtns();
 
-            // Display Alert Dialog
+          // Display Alert Dialog to notify the player they lost the game
             AlertDialog.Builder loseBuild = new AlertDialog.Builder(this);
             loseBuild.setTitle("OOPS");
             loseBuild.setMessage("You lose!\n\nThe answer was:\n\n" + words);
