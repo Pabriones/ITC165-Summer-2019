@@ -29,7 +29,7 @@
         android:layout_height="84dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:background="#00FF08"
+        android:background="@drawable/blue_pill"
         android:text="@string/singlePlayerButton"
         app:layout_constraintBottom_toBottomOf="@+id/multiplayerButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:layout_marginBottom="228dp"
-        android:background="#00FF08"
+        android:background="@drawable/red_pill"
         android:text="@string/multiplayerButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
