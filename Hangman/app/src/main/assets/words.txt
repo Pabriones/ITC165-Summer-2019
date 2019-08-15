@@ -162,3 +162,8 @@ Keyboard
 Keypad
 Keyword
 Knowledge
+Morpheus
+Neo
+Oracle
+Priestess
+Spoon
